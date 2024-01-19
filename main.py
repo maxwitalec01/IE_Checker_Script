@@ -78,5 +78,6 @@ for domain in domains_to_check:
     next_row = get_last_row(sh2) + 1
     timestamp = get_current_timestamp()
     sh2.update(f"A{next_row}:F{next_row}", [[domain, domain_status, system_name, invoice_status, invoice_number, timestamp]])
+    # test comment
 
 print("Sheet2 updated with domain and invoice details.")
