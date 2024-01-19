@@ -22,5 +22,9 @@ jobs:
     - name: Copy main.py to VM
       run: scp main.py superuser@217.115.115.156:/home/superuser/
 
+    - name: Move main.py to ie_checker Directory
+      run: |
+        ssh superuser@217.115.115.156 'mv /home/superuser/main.py /home/superuser/ie_checker/'
+
 
         
