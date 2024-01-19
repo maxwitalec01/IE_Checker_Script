@@ -9,21 +9,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
-
-    - name: Set up SSH Connection
+    - name: Debug SSH connection
       run: |
-        mkdir -p ~/.ssh
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan 217.115.115.156 >> ~/.ssh/known_hosts
-        chmod 644 ~/.ssh/known_hosts
-
-    - name: Copy main.py to VM Home Directory
-      run: |
-        scp main.py superuser@217.115.115.156:/home/superuser/
-
-    - name: Move main.py to ie_checker Directory
-      run: |
-        ssh superuser@217.115.115.156 'mv /home/superuser/main.py /home/superuser/ie_checker/'
+        ssh -vvv superuser@217.115.115.156
