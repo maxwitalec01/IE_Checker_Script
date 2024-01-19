@@ -19,13 +19,8 @@ jobs:
         ssh-keyscan -t rsa 217.115.115.156 >> ~/.ssh/known_hosts
         chmod 644 ~/.ssh/known_hosts
 
-    - name: Copy main.py to VM Home Directory
-      run: |
-        scp main.py superuser@217.115.115.156:/home/superuser/
-
-    - name: Move main.py to ie_checker Directory
-      run: |
-        ssh superuser@217.115.115.156 'mv /home/superuser/main.py /home/superuser/ie_checker/'
+    - name: Copy main.py to VM
+      run: scp main.py superuser@217.115.115.156:/home/superuser/
 
 
         
