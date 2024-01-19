@@ -2,7 +2,7 @@ name: Deploy main.py to VM
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   deploy:
