@@ -1,8 +1,8 @@
-name: Deploy to VM
+name: Deploy main.py to VM
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   deploy:
@@ -20,6 +20,6 @@ jobs:
         ssh-keyscan 217.115.115.156 >> ~/.ssh/known_hosts
         chmod 644 ~/.ssh/known_hosts
 
-    - name: Deploy to VM
+    - name: Copy main.py to VM
       run: |
-        ssh superuser@217.115.115.156 'bash -s' < ./scripts/deploy.sh
+        scp main.py superuser@217.115.115.156:/home/superuser/ie_checker/
