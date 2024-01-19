@@ -1,5 +1,5 @@
 name: Deploy main.py to VM
-#test
+#tests
 on:
   push:
     branches: [ master ]
