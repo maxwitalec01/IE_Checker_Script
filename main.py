@@ -5,7 +5,8 @@ import urllib3
 from dotenv import load_dotenv
 import os
 from datetime import datetime
-#test
+
+
 # Initialize Google Sheets API
 gc = gspread.service_account(filename="creds.json")
 sh1 = gc.open("IEDR Issue").worksheet("IE_Script Input")
@@ -51,7 +52,12 @@ def check_domain_status_and_invoice(domain, systems):
             domain_info = domain_info_response["domains"]["domain"][0]
             domain_status = domain_info["status"].capitalize()
             dar_status = domain_info.get('donotrenew', '1')
-            status_prefix = "DAR " if dar_status else ""
+            print(dar_status)
+            status_prefix = ''
+            if dar_status == "0":
+                status_prefix = ""
+            else:
+                status_prefix = "DAR "
 
             # Get USER ID to check invoice details
             userid = domain_info["userid"]
