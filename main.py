@@ -1,4 +1,3 @@
-import csv
 import gspread
 import whmcspy
 import urllib3
@@ -20,7 +19,7 @@ load_dotenv()
 systems = {
     "WW": {"api_url": os.getenv('MANAGE_WEBWORLD_API'), "api_identifier": os.getenv('MANAGE_WEBWORLD_IDENTIFIER'), "api_secret": os.getenv('MANAGE_WEBWORLD_SECRET')},
     "WH": {"api_url": os.getenv('MANAGE_WEBHOST_API'), "api_identifier": os.getenv('MANAGE_WEBHOST_IDENTIFIER'), "api_secret": os.getenv('MANAGE_WEBHOST_SECRET')},
-    "HI": {"api_url": os.getenv('MANAGE_MYACCOUNT_API'), "api_identifier": os.getenv('MANAGE_MYACCOUNT_IDENTIFIER'), "api_secret": os.getenv('MANAGE_MYACCOUNT_SECRET')}
+    "HI": {"api_url": os.getenv('MANAGE_MYACCOUNT_API'), "api_identifier": os.getenv('MANAGE_MYACCOUNT_IDENTIFIER'), "api_secret": os.getenv('MANAGE_MYACCOUNT_SECRET')},
 }
 
 # Function to get the last row number in the sheet
@@ -52,9 +51,9 @@ def check_domain_status_and_invoice(domain, systems):
             domain_info = domain_info_response["domains"]["domain"][0]
             domain_status = domain_info["status"].capitalize()
             dar_status = domain_info.get('donotrenew', '1')
-            print(dar_status)
+            dar_status = str(dar_status)
             status_prefix = ''
-            if dar_status == "0":
+            if dar_status == "0" or 0:
                 status_prefix = ""
             else:
                 status_prefix = "DAR "
@@ -62,7 +61,7 @@ def check_domain_status_and_invoice(domain, systems):
             # Get USER ID to check invoice details
             userid = domain_info["userid"]
             try:
-                user_invoices = whmcs.call('GetInvoices', userid=userid, limitnum=50, order="desc")["invoices"]["invoice"]
+                user_invoices = whmcs.call('GetInvoices', userid=userid, limitnum=150, order="desc")["invoices"]["invoice"]
             except:
                 "Error Line 61"
                 break
@@ -84,6 +83,5 @@ for domain in domains_to_check:
     next_row = get_last_row(sh2) + 1
     timestamp = get_current_timestamp()
     sh2.update(f"A{next_row}:F{next_row}", [[domain, domain_status, system_name, invoice_status, invoice_number, timestamp]])
-    # test comment
 
 print("Sheet2 updated with domain and invoice details.")
